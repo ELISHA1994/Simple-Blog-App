@@ -4,9 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import {RequestProvider} from 'react-request-hook';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3000/api/'
+})
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <RequestProvider value={axiosInstance}>
+          <App />
+      </RequestProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

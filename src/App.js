@@ -1,4 +1,5 @@
 import React, {useReducer, useEffect, useState} from 'react'
+import { useResource } from 'react-request-hook'
 
 import PostList from './post/PostList'
 import CreatePost from "./post/CreatePost"
@@ -18,11 +19,25 @@ export default function App () {
     const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: [] })
     const { user } = state
 
+    const [ posts, getPosts ] = useResource(() => ({
+        url: '/posts',
+        method: 'get'
+    }))
+
+    useEffect(getPosts, [])
+
     useEffect(() => {
-        fetch('/api/posts')
-            .then(result => result.json())
-            .then(posts =>  dispatch({type: 'FETCH_POSTS', posts}))
-    }, [])
+        if (posts && posts.data ) {
+            dispatch({ type: 'FETCH_POSTS', posts: posts.data })
+        }
+    }, [posts])
+
+    // useEffect(() => {
+    //     fetch('/api/posts')
+    //         .then(result => result.json())
+    //         .then(posts =>  dispatch({type: 'FETCH_POSTS', posts}))
+    // }, [])
+
 
     useEffect(() => {
         if (user) {
@@ -55,6 +70,7 @@ export default function App () {
 
 
 // ........................Actions...........................
+// Implementing Requests Using Axios and react-request-hook Library
 // ..........user Actions..................
 // { type: 'LOGIN', username: 'Daniel Bugl', password: 'notsosecure' }
 // { type: 'REGISTER', username: 'Daniel Bugl', password: 'notsosecure', passwordRepeat: 'notsosecure' }
