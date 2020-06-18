@@ -6,14 +6,21 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "concurrently": "^5.2.0",
+    "http-proxy-middleware": "^1.0.4",
+    "json-server": "^0.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npx concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:server": "npx json-server --watch server/db.json --port 4000 --routes server/routes.json",
+    "start:client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:nowatch": "npx concurrently --kill-others --success \"first\" \"npm run start:server\" \"npm run test:client -- --watchAll=false\"",
+    "test:client": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
