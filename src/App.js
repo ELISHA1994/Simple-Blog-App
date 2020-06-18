@@ -31,7 +31,7 @@ export default function App () {
             dispatch({ type: 'POSTS_ERROR' })
         }
         if (posts && posts.data ) {
-            dispatch({ type: 'FETCH_POSTS', posts: posts.data })
+            dispatch({ type: 'FETCH_POSTS', posts: posts.data.reverse() })
         }
     }, [posts])
 
@@ -76,9 +76,10 @@ export default function App () {
 // ........................Actions...........................
 // Implementing Requests Using Axios and react-request-hook Library
 // ..........user Actions..................
-// { type: 'LOGIN', username: 'Daniel Bugl', password: 'notsosecure' }
+// { type: 'LOGIN', username: 'Daniel Bugl', password: 'notsosecure42' }
 // { type: 'REGISTER', username: 'Daniel Bugl', password: 'notsosecure', passwordRepeat: 'notsosecure' }
 // { type: 'LOGOUT' }
+//   Eyo 1234
 
 // ............post Actions...................
 // { type: 'CREATE_POST', title: 'React Hooks', content: 'The greatest thing since sliced bread!', author: 'Daniel Bugl' }
