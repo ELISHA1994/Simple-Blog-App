@@ -11,12 +11,6 @@
       "title": "Using React Fragments",
       "content": "Keeping the DOM tree clean!",
       "author": "Daniel Bugl"
-    },
-    {
-      "title": "Accelerating DevOps in Azure Environments With Office 365",
-      "content": "Office 365 is Microsoft's Cloud delivery of Office.  That includes traditional Office applications, like Word, PowerPoint, Excel, Access, et cetera. However, it also comes with many Enterprise features to enable things like data loss prevention, conditional access to resources, and Office 365 message encryption. There are a lot of things that tie into the broader Cloud that I believe Enterprise Office users would find very familiar and very useful when it comes to managing their infrastructure, managing their data, and how they collaborate.\n\nGartner estimates that Office 365 is twice as popular in enterprises as Google apps.",
-      "author": "Elisha",
-      "id": "3UCilc-"
     }
   ],
   "users": [
@@ -29,6 +23,11 @@
       "id": 2,
       "username": "Elisha Bello",
       "password": "supersecure26"
+    },
+    {
+      "username": "Mary Bello",
+      "password": "notsosecured",
+      "id": 3
     }
   ],
   "themes": [
