@@ -16,4 +16,4 @@ function Post ({ title, content, author }) {
 
 export default React.memo(Post,
     (prev, next) => prev.title === next.title && prev.content === next.content && prev.author === next.author
-    )
+)

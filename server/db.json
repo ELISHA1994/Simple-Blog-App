@@ -11,6 +11,12 @@
       "title": "Using React Fragments",
       "content": "Keeping the DOM tree clean!",
       "author": "Daniel Bugl"
+    },
+    {
+      "title": "Testing React Hooks Blog",
+      "content": "testing the app to see if a feature works",
+      "author": "Elisha Bello",
+      "id": "ZiJyFIv"
     }
   ],
   "users": [
