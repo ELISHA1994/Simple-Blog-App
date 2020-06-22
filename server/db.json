@@ -23,6 +23,12 @@
       "content": "VUE Framework is lovely because it is light wight",
       "author": "Elisha Bello",
       "id": "wIDr0GH"
+    },
+    {
+      "title": "Navi",
+      "content": "Declarative, asynchronous routing for React.\n\nUse functions, promises and async/await to map URLs to data and views. Use asynchronous data in your components, without fiddling with effects or component state. Pre-render for SEO — without even ejecting from create-react-app!",
+      "author": "Elisha Bello",
+      "id": "Gc6L81Q"
     }
   ],
   "users": [

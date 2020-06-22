@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import PostPage from './pages/PostPage'
 import { Router, View } from "react-navi";
 import { mount, route } from "navi";
+import FooterBar from "./pages/FooterBar";
 
 
 
@@ -45,6 +46,7 @@ export default function App () {
                             <HeaderBar setTheme={setTheme} />
                             <hr />
                             <View />
+                            <FooterBar />
                         </div>
                     </Router>
                 </ThemeContext.Provider>
