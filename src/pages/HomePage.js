@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useResource } from 'react-request-hook'
 import PostList from '../post/PostList'
-import {StateContext, ThemeContext} from "../contexts";
+import {StateContext} from "../contexts";
 
 export default function HomePage () {
     const { state, dispatch } = useContext(StateContext)

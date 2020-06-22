@@ -3,10 +3,19 @@ import React, {useReducer, useEffect, useState} from 'react'
 import appReducer from './reducers'
 import { ThemeContext, StateContext } from "./contexts";
 import HeaderBar from "./pages/HeaderBar";
-//import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
 import PostPage from './pages/PostPage'
+import { Router, View } from "react-navi";
+import { mount, route } from "navi";
 
 
+
+const routes = mount({
+    '/': route({ view: <HomePage />}),
+    '/view/:id': route(req => {
+        return { view: <PostPage id={req.params.id} />}
+    }),
+})
 
 export default function App () {
     const [theme, setTheme ] = useState({
@@ -14,8 +23,8 @@ export default function App () {
         secondaryColor: 'coral'
     })
     const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: [], error: '' })
-    const { user, error } = state
-
+    // const { user, error } = state
+    const { user } = state
 
 
     useEffect(() => {
@@ -29,17 +38,17 @@ export default function App () {
 
 
     return (
-        <div style={{ padding: 8 }} >
-            <HeaderBar setTheme={setTheme} />
             <StateContext.Provider value={{ state, dispatch }} >
                 <ThemeContext.Provider value={theme} >
-                    <br/>
-                    <hr />
-                    {/*<HomePage />*/}
-                    <PostPage id={'ZiJyFIv'} />
+                    <Router routes={routes}>
+                        <div style={{ padding: 8 }}>
+                            <HeaderBar setTheme={setTheme} />
+                            <hr />
+                            <View />
+                        </div>
+                    </Router>
                 </ThemeContext.Provider>
             </StateContext.Provider>
-        </div>
     )
 }
 
