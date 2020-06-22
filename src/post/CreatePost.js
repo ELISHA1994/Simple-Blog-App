@@ -1,14 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, {  useContext, useEffect } from 'react'
 import { useResource } from 'react-request-hook'
 import { StateContext } from "../contexts";
 import { useNavigation} from "react-navi";
+import {useInput} from "react-hookedup";
 
 export default function CreatePost () {
     const { state, dispatch } = useContext(StateContext)
     const { user } = state
 
-    const [ title, setTitle ] = useState('')
-    const [ content, setContent ] = useState('')
+
+    const { value: title, bindToInput: bindTitle } = useInput('')
+    const  { value: content, bindToInput: bindContent } = useInput('')
 
     const [ post, createPost ] = useResource(({ title, content, author }) => ({
         url: '/posts',
@@ -25,13 +27,6 @@ export default function CreatePost () {
         }
     }, [post, dispatch, navigation])
 
-    function handleTitle (evt) {
-        setTitle(evt.target.value)
-    }
-
-    function handleContent(evt) {
-        setContent(evt.target.value)
-    }
 
     function handleCreate() {
         createPost({ title, content, author: user })
@@ -42,9 +37,9 @@ export default function CreatePost () {
             <div>Author: <b>{user}</b></div>
             <div>
                 <label htmlFor="create-title">Title:</label>
-                <input type="text" value={title} onChange={handleTitle} name="create-title" id="create-title" />
+                <input type="text" value={title} {...bindTitle} name="create-title" id="create-title" />
             </div>
-            <textarea value={content} onChange={handleContent} />
+            <textarea value={content} {...bindContent} />
             <input type="submit" value="Create" />
         </form>
     )
