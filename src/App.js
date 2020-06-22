@@ -1,13 +1,10 @@
 import React, {useReducer, useEffect, useState} from 'react'
-import { useResource } from 'react-request-hook'
 
-import PostList from './post/PostList'
-import CreatePost from "./post/CreatePost"
-import UserBar from "./user/UserBar"
 import appReducer from './reducers'
-import Header from './Header'
 import { ThemeContext, StateContext } from "./contexts";
-import ChangeTheme from "./ChangeTheme";
+import HeaderBar from "./pages/HeaderBar";
+//import HomePage from "./pages/HomePage";
+import PostPage from './pages/PostPage'
 
 
 
@@ -19,27 +16,6 @@ export default function App () {
     const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: [], error: '' })
     const { user, error } = state
 
-    const [ posts, getPosts ] = useResource(() => ({
-        url: '/posts',
-        method: 'get'
-    }))
-
-    useEffect(getPosts, [])
-
-    useEffect(() => {
-        if (posts && posts.error ) {
-            dispatch({ type: 'POSTS_ERROR' })
-        }
-        if (posts && posts.data ) {
-            dispatch({ type: 'FETCH_POSTS', posts: posts.data.reverse() })
-        }
-    }, [posts])
-
-    // useEffect(() => {
-    //     fetch('/api/posts')
-    //         .then(result => result.json())
-    //         .then(posts =>  dispatch({type: 'FETCH_POSTS', posts}))
-    // }, [])
 
 
     useEffect(() => {
@@ -54,20 +30,13 @@ export default function App () {
 
     return (
         <div style={{ padding: 8 }} >
+            <HeaderBar setTheme={setTheme} />
             <StateContext.Provider value={{ state, dispatch }} >
                 <ThemeContext.Provider value={theme} >
-                    <Header text="React Hooks Blog" />
-                    <ChangeTheme theme={theme} setTheme={setTheme} />
-                    <br />
-                    <React.Suspense fallback={"Loading..."}>
-                        <UserBar />
-                    </React.Suspense>
-                    <br/>
-                    {user && <CreatePost  />}
                     <br/>
                     <hr />
-                    {error && <b>{error}</b>}
-                    <PostList />
+                    {/*<HomePage />*/}
+                    <PostPage id={'ZiJyFIv'} />
                 </ThemeContext.Provider>
             </StateContext.Provider>
         </div>
