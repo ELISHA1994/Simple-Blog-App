@@ -21,6 +21,7 @@ export default function CreatePost () {
     const navigation = useNavigation()
 
     useEffect(() => {
+        console.log('mounted')
         if (post && post.data) {
             dispatch({ type: 'CREATE_POST', ...post.data})
             navigation.navigate(`/view/${post.data.id}`)
