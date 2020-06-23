@@ -12,7 +12,7 @@ export default function HomePage () {
         method: 'get'
     }))
 
-    useEffect(getPosts, [])
+    useEffect(getPosts, [getPosts])
 
     useEffect(() => {
         if (posts && posts.error ) {
