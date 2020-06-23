@@ -1,8 +1,10 @@
-import React, {  useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useResource } from 'react-request-hook'
 import { StateContext } from "../contexts";
 import { useNavigation} from "react-navi";
 import {useInput} from "react-hookedup";
+import useUndo from "use-undo";
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function CreatePost () {
     const { state, dispatch } = useContext(StateContext)
@@ -10,8 +12,27 @@ export default function CreatePost () {
 
 
     const { value: title, bindToInput: bindTitle } = useInput('')
-    const  { value: content, bindToInput: bindContent } = useInput('')
 
+    const [ content, setInput ] = useState('')
+    const [ undoContent, {
+        set: setContent,
+        undo,
+        redo,
+        canUndo,
+        canRedo
+    } ] = useUndo('')
+    const [ setDebounce, cancelDebounce ] = useDebouncedCallback(
+        (value) => {
+            setContent(value)
+        },
+        200
+    )
+
+    useEffect(() => {
+        cancelDebounce()
+        setInput(undoContent.present)
+    }, [undoContent, cancelDebounce])
+//https://nikgraf.github.io/react-hooks/
     const [ post, createPost ] = useResource(({ title, content, author }) => ({
         url: '/posts',
         method: 'post',
@@ -28,6 +49,11 @@ export default function CreatePost () {
         }
     }, [post, dispatch, navigation])
 
+    function handleContent(e) {
+        const { value } = e.target
+        setInput(value)
+        setDebounce(value)
+    }
 
     function handleCreate() {
         createPost({ title, content, author: user })
@@ -40,7 +66,9 @@ export default function CreatePost () {
                 <label htmlFor="create-title">Title:</label>
                 <input type="text" value={title} {...bindTitle} name="create-title" id="create-title" />
             </div>
-            <textarea value={content} {...bindContent} />
+            <textarea value={content} onChange={handleContent} />
+            <button type="button" onClick={undo} disabled={!canUndo}>Undo</button>
+            <button type="button" onClick={redo} disabled={!canRedo}>Redo</button>
             <input type="submit" value="Create" />
         </form>
     )
