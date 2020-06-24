@@ -1,18 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { useResource } from "react-request-hook"
-import { StateContext } from "../contexts";
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useAPILogin } from '../hooks'
 import { useInput } from "react-hookedup";
 
 export default function Login () {
-    const { dispatch } = useContext(StateContext)
+    const { dispatch } = useDispatch()
     const { value: username, bindToInput: bindUsername } = useInput('')
     const [ loginFailed, setLoginFailed ] = useState(false)
     const { value: password, bindToInput: bindPassword } = useInput('')
 
-    const [ user, login ] = useResource((username, password) => ({
-        url: `/login/${encodeURI(username)}/${encodeURI(password)}`,
-        method: 'get'
-    }))
+    const [ user, login ] = useAPILogin()
 
     useEffect(() => {
         if (user && user.data) {

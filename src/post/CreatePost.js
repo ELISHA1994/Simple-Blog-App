@@ -1,43 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { useResource } from 'react-request-hook'
-import { StateContext } from "../contexts";
+import React, { useEffect } from 'react'
 import { useNavigation} from "react-navi";
 import {useInput} from "react-hookedup";
-import useUndo from "use-undo";
-import { useDebouncedCallback } from 'use-debounce';
+import {useDispatch, useDebouncedUndo, useUserState, useAPICreatePost } from "../hooks";
 
 export default function CreatePost () {
-    const { state, dispatch } = useContext(StateContext)
-    const { user } = state
+    const { dispatch } = useDispatch()
+    const { user } = useUserState()
 
 
     const { value: title, bindToInput: bindTitle } = useInput('')
 
-    const [ content, setInput ] = useState('')
-    const [ undoContent, {
-        set: setContent,
-        undo,
-        redo,
-        canUndo,
-        canRedo
-    } ] = useUndo('')
-    const [ setDebounce, cancelDebounce ] = useDebouncedCallback(
-        (value) => {
-            setContent(value)
-        },
-        200
-    )
-
-    useEffect(() => {
-        cancelDebounce()
-        setInput(undoContent.present)
-    }, [undoContent, cancelDebounce])
+    const [ content, setContent, { undo, redo, canUndo, canRedo } ] = useDebouncedUndo()
 //https://nikgraf.github.io/react-hooks/
-    const [ post, createPost ] = useResource(({ title, content, author }) => ({
-        url: '/posts',
-        method: 'post',
-        data: { title, content, author }
-    }))
+    const [ post, createPost ] = useAPICreatePost()
 
     const navigation = useNavigation()
 
@@ -51,8 +26,7 @@ export default function CreatePost () {
 
     function handleContent(e) {
         const { value } = e.target
-        setInput(value)
-        setDebounce(value)
+        setContent( value )
     }
 
     function handleCreate() {

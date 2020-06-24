@@ -22,3 +22,10 @@ export function useAPICreatePost() {
         data: { title, content, author }
     }))
 }
+
+export function useAPIThemes () {
+    return useResource(() => ({
+        url: '/themes',
+        method: 'get'
+    }))
+}
