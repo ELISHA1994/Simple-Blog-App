@@ -11,7 +11,7 @@ export default function CreatePost () {
     const { value: title, bindToInput: bindTitle } = useInput('')
 
     const [ content, setContent, { undo, redo, canUndo, canRedo } ] = useDebouncedUndo()
-//https://nikgraf.github.io/react-hooks/
+    //https://nikgraf.github.io/react-hooks/
     const [ post, createPost ] = useAPICreatePost()
 
     const navigation = useNavigation()
